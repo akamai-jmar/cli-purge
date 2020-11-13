@@ -17,6 +17,8 @@ package main
 
 import (
 	"os"
+	"net/http"
+    "crypto/tls"
 
 	akamai "github.com/akamai/cli-common-golang"
 )
@@ -26,6 +28,9 @@ const (
 )
 
 func main() {
+	// Disable strict TLS validation on default HTTP Clients
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	
 	akamai.CreateApp(
 		"purge",
 		"A CLI for Purge",
